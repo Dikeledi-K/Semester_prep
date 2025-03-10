@@ -1,61 +1,70 @@
 import random
 
-Quotees = ["Abdullah Ibrahim", "Miriam Makeba", "Nelson Mandela", "Eleanor Roosevelt",
-           "Anne Frank", "Alexander Graham Bell", "Thomas Edison", "Estee Lauder", "Maya Angelou", "Walt Disney"]
+Quotees = ["Abdullah Ibrahim","Miriam Makeba", "Nelson Mandela", "Eleanor Roosevelt",
+ "Anne Frank", "Alexander Graham Bell","Thomas Edison","Estee Lauder","Maya Angelou", "Walt Disney"]
 
-# Step 1: Update the function to choose a file based on user input
+
+# TODO: Step 1 - update the below function to correctly choose text file chosen from command line arguments. 
+#                Use `quotes.txt` for blank user input.
 def ask_file_name(user_input):
-    return user_input if user_input else "quotes.txt"
-
-# Step 2: Correct the functionality to open the file and handle FileNotFoundError
+    if user_input:
+        return user_input
+    return "quotes.txt"
+    
+    
+# TODO: Step 2 - Correct the functionality in the function below to successfully open file
+#                and to sucessfully handle the FileNotFoundError. 
 def read_file(file_name):
     try:
         with open(file_name, 'r') as file:
-            return file.read()  # Return the content of the file as a string
+            content = file.read()  # Read the content of the file
+            print("File successfully opened...\n")  # Print success message
+            return content  # Return the file content as a string
     except FileNotFoundError as e:
         print(f"FileNotFoundError successfully handled\n{e}")
         return ""
 
-# Step 3: Randomly select a quotee from the Quotees list and return it
+# TODO: Step 3 - randomly select quotee from `Quotees` list and return a random quotee. 
 def select_random_quotee(Quotees):
-    return random.choice(Quotees) if Quotees else ""
+    random_quotee = random.choice(Quotees)
+    return random_quotee
 
-# Step 4: Correctly match a quote from the text file to the chosen quotee
-def find_quote(random_quotee, quotes):
+
+# TODO: Step 4 - correct the functionality in the function below to 
+#                match quote from text file to chosen quotee. 
+#                "Quote/quotee does not exist." must be returned for quote that doesn't exist.
+def find_quote(random_quotee,quotes):
     for quote in quotes:
         if random_quotee in quote:
-            return quote.strip()
+            return quote
     return "Quote/quotee does not exist."
 
-# Step 5: Correctly print out the final results to pass the unit tests
-def final_output(quote, quotee):
-    if quote != "Quote/quotee does not exist.":
-        quote_parts = quote.split("~")
-        print("Quote found in file:")
-        print(f"{quotee}: {quote_parts[1].strip()}")
-    else:
-        print(quote)
 
+# TODO: Step 5 - Correctly print out the final results to pass the unitests.
+def final_output(quote,quotee):
+    quote_ = quote.strip(" ").split('~')
+    print("Quote found in file:")
+    print(f"'{quotee}':{quote_[1]}")
+
+final_output("Albert Einstein ~ \"We cannot solve our problems with the same thinking we used when we created them.\"","Albert Einstein") 
+ 
 if __name__ == "__main__":
     """
-     You can leave this code as is, and only implement the above steps.
+     You can leave this code as is, and only implemented above where the code comments prompt you.
      """
     user_input = input("Desired file? [leave empty to use quotes.txt] :")
     quotes_file = ask_file_name(user_input)
     print(repr(str(quotes_file)) + ': is your chosen file.\n')
-
-    quotes = read_file(quotes_file).split("\n\n")  # Split content by double newlines
+    quotes = read_file(quotes_file).split("\n\n")
     random_quotee = select_random_quotee(Quotees)
-    
     if random_quotee == "":
         print('Empty list.\n')
     else:
-        print(f"{random_quotee} has randomly been chosen.\n")
-
-    true_quote = find_quote(random_quotee, quotes)
-
-    if true_quote == "Quote/quotee does not exist.":
-        print(f"{random_quotee} is not present in the file\n")
+        print(str(random_quotee) + ' has randomly been chosen.\n')
+    true_quote = find_quote(random_quotee,quotes)
+    if true_quote == "":
+        print(str(random_quotee) + ' is not present in the file\n')
+        quit()
     else:
-        print(f"{random_quotee} is present in the file\n")
-        final_output(true_quote, random_quotee)
+        print(str(random_quotee) + ' is present in the file\n')
+        final_output(true_quote,random_quotee)
