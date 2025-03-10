@@ -4,11 +4,16 @@ def get_date_of_birth(id_number:str):
     STEP 2: Extract the date of birth from the ID number and return it as a string
     return format: DD/MM/YY: 
     """
-    birth_of_date = id_number[4:6] 
-    return 
+    # Extract year, month, and day from the ID number
+    year = id_number[:2]   # First 2 digits (YY)
+    month = id_number[2:4] # Next 2 digits (MM)
+    day = id_number[4:6]   # Next 2 digits (DD)
+    
+    # Return the formatted date
+    return f"{day}/{month}/{year}"
+
 #Question 2    
 def get_gender(id_number):
-    id_number = []
     """
     STEP 3: Extract the gender from the ID number using the formula below and return
     it as a string
@@ -16,11 +21,12 @@ def get_gender(id_number):
     female and if it is greater than 4999, the person is male.
     """
     
-    if int(id_number[6]) > 4:
-       print('Male')
-    else:
-        print('Female')
-    return get_gender
+    sequence_number = int(id_number[6:10])  # Extract SSSS (7th to 10th digits)
+
+    if sequence_number >= 5000:
+        return "Male"
+    return "Female"
+    
     
 #Question 3
 def get_citizenship(id_number):
@@ -31,33 +37,37 @@ def get_citizenship(id_number):
     a South African citizen and if it is greater than 01, the person is a non-South 
     African citizen.
     """
-    if int(id_number[10]) == 0: 
-        print('South African') # 11th digit is less than 1
-    else:
-        print('Non-South African') # 11th digit is not less than 1
-    return get_citizenship
+    
+    citizenship_digit = id_number[10]  # The 11th digit (C)
+
+    if citizenship_digit == '0':
+        return "South African"
+    return "Non-South African"
+    
 #Question 4
-def FizzBuzz(n):
+def fizzbuzz(n):
+    import sys 
         
-        """
+    """
     Fizzbuzz is a programme that prints the numbers from 1 to n, 
     but for multiples of 3, it prints "Fizz" instead of the number, 
     and for multiples of 5, it prints "Buzz" instead of the number. 
     For numbers that are multiples of both 3 and 5, it prints "FizzBuzz.
     TODO: define a function called fizzbuzz and implement the fucntionality above.
      """
-        for i in range[1,101]:
-            if i % 3 == 0 and i % 5 ==0:
-                print("FizzBuzz")
-            elif i % 3 == 0:
-                print("Fizz")
-            elif i % 5 == 0:
-                print("Buzz")
-            else:
-                print(i)
-        return FizzBuzz
-          
-    
+     
+    for i in range(1, n + 1):
+        if i % 3 == 0 and i % 5 == 0:
+            print("FizzBuzz")
+        elif i % 3 == 0:
+            print("Fizz")
+        elif i % 5 == 0:
+            print("Buzz")
+        else:
+            print(i)
+        
+
+ 
         
         
     
